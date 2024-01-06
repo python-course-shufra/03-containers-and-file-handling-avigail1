@@ -33,6 +33,10 @@ classroom = [
     },
 ]
 
+def findStudent(s):
+      for x,i in enumerate(classroom):
+         if(i['name']==s ):
+            return x,i
 
 def add_student(name, email=None):
     """Add a new student to the classroom
@@ -42,21 +46,41 @@ def add_student(name, email=None):
              in lowercase, you can use the `s.lower()` method
     'grade': initialize with empty list
     """
+    newStunent={
+        'name': name,
+        'grades': [],
+    }
+    if(email):
+        newStunent["email"]=email
+    else:
+        newStunent["email"]=f'{newStunent["name"]}@example.com'
+    classroom.append(newStunent)
+
     pass
+
 
 
 def delete_student(name):
     """Delete a student from the classroom"""
+    fstudent= findStudent(name)
+    if(fstudent):
+        classroom.remove(fstudent[1])
     pass
+
 
 
 def set_email(name, email):
     """Sets the email of the student"""
+    fstudent= findStudent(name)
+    if(fstudent):
+        classroom[fstudent[0]]["email"]=email
     pass
-
 
 def add_grade(name, profession, grade):
     """Adds a new grade to the student grades"""
+    fstudent= findStudent(name)
+    if(fstudent):
+        classroom[fstudent[0]]["grades"].append((profession, grade))
     pass
 
 
@@ -64,9 +88,23 @@ def avg_grade(name, profession):
     """Returns the average of grades of the student
     in the specified profession
     """
+    sum=0
+    count=0
+    fstudent= findStudent(name)
+    if(fstudent):
+        for idx,val in enumerate(classroom[fstudent[0]]["grades"]):
+            if(val[0]== profession):
+                sum+=val[1]
+                count+=1
+    return sum/ count
     pass
 
-
 def get_professions(name):
-    """Returns a list of unique professions that student has grades in"""
+    prof=[]
+    fstudent= findStudent(name)
+    if(fstudent):
+        for val in classroom[fstudent[0]]["grades"]:
+            if not any (val[0]==x for x in prof):
+               prof.append(val[0])
+    return prof
     pass
