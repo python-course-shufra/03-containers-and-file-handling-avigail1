@@ -51,9 +51,9 @@ def add_student(name, email=None):
         'grades': [],
     }
     if(email):
-        newStunent["email"]=email
+        newStunent["email"]=email.lower()
     else:
-        newStunent["email"]=f'{newStunent["name"]}@example.com'
+        newStunent["email"]=f'{newStunent["name"].lower}@example.com'
     classroom.append(newStunent)
 
     pass
